@@ -3,8 +3,8 @@ import sys
 from dataclasses import dataclass
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from src.pipeline.exception import CustomException
-from src.pipeline.logger import logging
+from src.exception import CustomException
+from src.logger import logging
 
 # Optional imports if executing this module directly
 from src.components.data_transformation import DataTransformation, DataTransformationConfig
