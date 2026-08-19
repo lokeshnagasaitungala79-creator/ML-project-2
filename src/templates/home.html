@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Churn Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Customer Churn Prediction</h1>
+
+    <form action="{{ url_for('predict_datapoint') }}" method="post">
+
+        <!-- Gender -->
+        <label>Gender</label>
+        <select name="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+
+        <!-- Senior Citizen -->
+        <label>Senior Citizen</label>
+        <select name="SeniorCitizen" required>
+            <option value="" disabled selected>Select</option>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+
+
+        <!-- Partner -->
+        <label>Partner</label>
+        <select name="Partner" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <!-- Dependents -->
+        <label>Dependents</label>
+        <select name="Dependents" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <!-- Tenure -->
+        <label>Tenure (Months)</label>
+        <input
+            type="number"
+            name="tenure"
+            placeholder="Enter tenure"
+            min="0"
+            max="100"
+            required
+        >
+
+
+        <!-- Phone Service -->
+        <label>Phone Service</label>
+        <select name="PhoneService" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <!-- Multiple Lines -->
+        <label>Multiple Lines</label>
+        <select name="MultipleLines" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="No phone service">No phone service</option>
+        </select>
+
+
+        <!-- Internet Service -->
+        <label>Internet Service</label>
+        <select name="InternetService" required>
+            <option value="" disabled selected>Select</option>
+            <option value="DSL">DSL</option>
+            <option value="Fiber optic">Fiber optic</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <!-- Online Security -->
+        <label>Online Security</label>
+        <select name="OnlineSecurity" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="No internet service">No internet service</option>
+        </select>
+
+
+        <!-- Online Backup -->
+        <label>Online Backup</label>
+        <select name="OnlineBackup" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="No internet service">No internet service</option>
+        </select>
+
+
+        <!-- Device Protection -->
+        <label>Device Protection</label>
+        <select name="DeviceProtection" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="No internet service">No internet service</option>
+        </select>
+
+
+        <!-- Tech Support -->
+        <label>Tech Support</label>
+        <select name="TechSupport" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="No internet service">No internet service</option>
+        </select>
+
+
+        <!-- Streaming TV -->
+        <label>Streaming TV</label>
+        <select name="StreamingTV" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="No internet service">No internet service</option>
+        </select>
+
+
+        <!-- Streaming Movies -->
+        <label>Streaming Movies</label>
+        <select name="StreamingMovies" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="No internet service">No internet service</option>
+        </select>
+
+
+        <!-- Contract -->
+        <label>Contract</label>
+        <select name="Contract" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Month-to-month">Month-to-month</option>
+            <option value="One year">One year</option>
+            <option value="Two year">Two year</option>
+        </select>
+
+
+        <!-- Paperless Billing -->
+        <label>Paperless Billing</label>
+        <select name="PaperlessBilling" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+
+        <!-- Payment Method -->
+        <label>Payment Method</label>
+        <select name="PaymentMethod" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Electronic check">Electronic check</option>
+            <option value="Mailed check">Mailed check</option>
+            <option value="Bank transfer (automatic)">
+                Bank transfer (automatic)
+            </option>
+            <option value="Credit card (automatic)">
+                Credit card (automatic)
+            </option>
+        </select>
+
+
+        <!-- Monthly Charges -->
+        <label>Monthly Charges</label>
+        <input
+            type="number"
+            step="0.01"
+            name="MonthlyCharges"
+            placeholder="Enter monthly charges"
+            min="0"
+            required
+        >
+
+
+        <!-- Total Charges -->
+        <label>Total Charges</label>
+        <input
+            type="number"
+            step="0.01"
+            name="TotalCharges"
+            placeholder="Enter total charges"
+            min="0"
+            required
+        >
+
+
+        <!-- Submit -->
+        <input
+            class="btn"
+            type="submit"
+            value="Predict Customer Churn"
+        >
+
+    </form>
+
+
+    {% if results %}
+    <div class="result">
+        Prediction: {{ results }}
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
